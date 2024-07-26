@@ -57,7 +57,8 @@ export class MemberCard extends Group {
 				},
 				{
 					// re-render as items are animating with opacity
-					onChange: reRender
+					onChange: reRender,
+					duration: 200
 				}
 			);
 		});
@@ -91,6 +92,7 @@ export class MemberCard extends Group {
 			},
 			{
 				onChange: this.reRender,
+				duration: 200,
 				onComplete: () => {
 					super.remove();
 					onComplete();
@@ -158,8 +160,9 @@ export class MemberCard extends Group {
 				},
 				{
 					// here since we are just using the already rendered item, no need to render whole canvas
-					onChange: this.renderCache.bind(this),
-					easing: util.ease.easeInOutCubic
+					onChange: this.reRender,
+					easing: util.ease.easeInOutQuad,
+					duration: 120
 				}
 			);
 		}

@@ -62,7 +62,7 @@ export const renderMembers = (members: MemberList, canvas: Canvas) => {
 				},
 				{
 					onChange: reRender,
-					duration: 100
+					duration: 160
 				}
 			);
 		} else {
