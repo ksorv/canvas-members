@@ -10,11 +10,11 @@
 	import { renderMembers } from '../utils/fabric/renderer/member';
 	import { CustomCanvas } from '$lib/fabric/canvas';
 	import { exportCards } from '../utils/fabric/export';
-	import { downloadFromURL } from '../utils/download.js';
+	import { downloadFromURL } from '../utils/download';
 
 	export let members: MemberList;
 	let canvas: CustomCanvas | null = null;
-	let exportedURLs: Array<{url: string, username: string}> = [];
+	let exportedURLs: Array<{ url: string, username: string }> = [];
 	let sidebar = false;
 
 	$: {
@@ -38,20 +38,20 @@
 	const zoomIn = () => {
 		if (!canvas) return;
 
-		canvas.zoomIn()
-	}
+		canvas.zoomIn();
+	};
 
 	const zoomOut = () => {
 		if (!canvas) return;
 
-		canvas.zoomOut()
-	}
+		canvas.zoomOut();
+	};
 
 	const resetZoom = () => {
 		if (!canvas) return;
 
-		canvas.resetZoom()
-	}
+		canvas.resetZoom();
+	};
 
 	onMount(() => {
 		// make canvas using CustomCanvas class
@@ -68,6 +68,21 @@
 
 		return () => {
 			canvas?.destroy();
+		};
+	});
+
+	onMount(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.altKey && event.key === 's') {
+				exportImages();
+			}
+		};
+
+		// ALT+S should trigger exportImages function
+		document.addEventListener('keydown', handleKeyDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleKeyDown);
 		};
 	});
 </script>
@@ -203,36 +218,36 @@
         }
       }
 
-			.imageContainer {
+      .imageContainer {
         position: relative;
 
-				img {
-					width: 100%;
-					object-fit: contain;
-				}
+        img {
+          width: 100%;
+          object-fit: contain;
+        }
 
-				.download {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					height: 28px;
-					width: 28px;
-					padding: 4px;
-					transition: all 0.2s ease-in-out;
-					border-radius: 50%;
-					position: absolute;
-					bottom: 8px;
-					right: 8px;
-					cursor: pointer;
-					border: 1px solid transparent;
-					outline: none;
+        .download {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 28px;
+          width: 28px;
+          padding: 4px;
+          transition: all 0.2s ease-in-out;
+          border-radius: 50%;
+          position: absolute;
+          bottom: 8px;
+          right: 8px;
+          cursor: pointer;
+          border: 1px solid transparent;
+          outline: none;
 
-					&:hover {
-						background: #12121210;
-						border-color: black;
-					}
-				}
-			}
+          &:hover {
+            background: #12121210;
+            border-color: black;
+          }
+        }
+      }
 
     }
   }
